@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY RESERVATIONS | SRIPATUM GARAGE</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-pink: #FF2D78; 
+            --dark-bg: #050505;    
+            --card-bg: #121212;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            background: var(--dark-bg);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            padding-top: 100px; /* เผื่อที่ให้ Navbar */
+        }
+
+        /* --- NAVIGATION --- */
+        .navbar {
+            background: rgba(5, 5, 5, 0.9) !important;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 45, 120, 0.2);
+            padding: 15px 0;
+        }
+
+        /* --- BOOKING CARD --- */
+        .booking-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .booking-card:hover {
+            border-color: var(--primary-pink);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 45, 120, 0.1);
+        }
+
+        .car-thumb {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
+        .status-badge {
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(255, 45, 120, 0.1);
+            color: var(--primary-pink);
+            border: 1px solid var(--primary-pink);
+        }
+
+        .btn-back {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .btn-back:hover {
+            background: white;
+            color: black;
+        }
+
+        .empty-state {
+            padding: 100px 0;
+            text-align: center;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <span style="font-weight: 800; letter-spacing: -1px;">SRIPATUM<span style="color:var(--primary-pink)">GARAGE</span></span>
+            </a>
+            <a href="{% url 'car_list' %}" class="btn-back">
+                <i class="fas fa-arrow-left me-2"></i> BACK TO FLEET
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12">
+                <h1 class="fw-800 text-uppercase" style="font-size: 2.5rem;">MY <span style="color:var(--primary-pink)">RESERVATIONS</span></h1>
+                <p class="text-secondary">ตรวจสอบสถานะและประวัติการจองรถของคุณได้ที่นี่</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-10">
+                {% for booking in bookings %}
+                <div class="booking-card p-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-2 mb-3 mb-md-0">
+                            {% if booking.car.image %}
+                                <img src="{{ booking.car.image.url }}" class="car-thumb" alt="Car">
+                            {% else %}
+                                <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7" class="car-thumb" alt="Default">
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <h5 class="fw-bold mb-1">{{ booking.car.name }}</h5>
+                            <div class="text-secondary small">Customer: <span class="text-white">{{ booking.customer_name }}</span></div>
+                            <div class="text-secondary small">Booking ID: #{{ booking.id }}</div>
+                        </div>
+
+                        <div class="col-md-3 mb-3 mb-md-0 text-md-center">
+                            <div class="small text-secondary fw-bold mb-1">RENTAL PERIOD</div>
+                            <div class="small">{{ booking.start_date }} <i class="fas fa-arrow-right mx-1 text-secondary"></i> {{ booking.end_date }}</div>
+                        </div>
+
+                        <div class="col-md-3 text-md-end">
+                            <span class="status-badge mb-2 d-inline-block">CONFIRMED</span>
+                            <div class="fs-4 fw-800" style="color: var(--primary-pink);">
+                                {{ booking.car.price_per_day }} <small class="fs-6">THB/Day</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="empty-state">
+                    <i class="fas fa-calendar-times fa-4x mb-4"></i>
+                    <h2 class="text-white">NO RESERVATIONS FOUND</h2>
+                    <p class="mb-4">มึงยังไม่ได้จองรถเลยสักคัน ไปเลือกรถที่หน้าหลักก่อน!</p>
+                    <a href="{% url 'car_list' %}" class="btn btn-lg" style="background:var(--primary-pink); color:white; border-radius:15px; font-weight:700;">BROWSE CARS</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-5 text-center mt-5 border-top border-secondary" style="opacity: 0.5;">
+        <p class="small text-secondary">© 2026 SRIPATUM GARAGE - ALL RIGHTS RESERVED</p>
+    </footer>
+
+</body>
+</html>
