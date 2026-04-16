@@ -45,21 +45,21 @@ templates/: หน้า HTML ทั้งหมดของระบบ
 
 ### 📸 ตัวอย่างหน้าจอการทำงาน (Screenshots)
 
-#### 1. หน้าแสดงWelcome (Home Page)
-(home.png)
-(home2.png)
+#### 1. หน้าแสดง Welcome (Home Page)
+![Home 1](home.png)
+![Home 2](home2.png)
 
-#### 2. หน้าแสดงรายการรถ (Home Page)
-(carlist.png)
-(home2.png)
+#### 2. หน้าแสดงรายการรถ (Car Inventory)
+![Car List 1](carlist.png)
+![Car List 2](home2.png)
 
 #### 3. หน้าแสดงการจองสำเร็จ (Booking Success)
-(22.png)
-(33.png)
+![Booking 1](22.png)
+![Booking 2](33.png)
 
 #### 4. หน้าจัดการข้อมูลหลังบ้าน (Admin Panel)
-(admin.png)
-(admin2.png)
+![Admin 1](admin.png)
+![Admin 2](admin2.png)
 
 
 
