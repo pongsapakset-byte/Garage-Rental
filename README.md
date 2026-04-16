@@ -28,7 +28,7 @@ Bash
 python manage.py migrate
 สร้างรหัส Admin (Superuser):
 
-Bash
+Bas้
 python manage.py createsuperuser
 รันเซิร์ฟเวอร์:
 
