@@ -60,6 +60,3 @@ templates/: หน้า HTML ทั้งหมดของระบบ
 #### 4. หน้าจัดการข้อมูลหลังบ้าน (Admin Panel)
 ![Admin 1](admin.png)
 ![Admin 2](admin2.png)
-
-
-
